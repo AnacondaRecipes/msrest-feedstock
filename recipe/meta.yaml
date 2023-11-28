@@ -11,20 +11,24 @@ source:
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: true  # [py<36]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
-    - python >=3.6
+    - python
     - pip
+    - wheel
+    - setuptools
   run:
     - azure-core >=1.24.0
     - certifi >=2017.4.17
     - isodate >=0.6.0
-    - python >=3.6
+    - python
     - requests >=2.16,<3.dev0
     - requests-oauthlib >=0.5.0
+  run_constrained:
+    - aiohttp >=3.0
 
 test:
   imports:
@@ -42,7 +46,10 @@ about:
   license: MIT
   license_family: MIT
   license_file: LICENSE.md
-  summary: AutoRest swagger generator Python client runtime.
+  summary: The runtime library "msrest" for AutoRest generated Python clients.
+  description: The runtime library "msrest" for AutoRest generated Python clients.
+  dev_url: https://github.com/Azure/msrest-for-python
+  doc_url: https://github.com/Azure/msrest-for-python
 
 extra:
   recipe-maintainers:
